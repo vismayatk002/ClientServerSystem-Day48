@@ -50,7 +50,6 @@ class Employee{
     salary;
     startDate;
     notes;
-    id;
 
     set empName(empName){
         this.empName = empName;
@@ -72,9 +71,6 @@ class Employee{
     }
     set notes(notes){
         this.notes = notes;
-    }
-    set id(id){
-        this.id = id;
     }
 }
 
@@ -158,13 +154,11 @@ function onSubmit(){
 
         const resultId = document.querySelector('#empId').value;
         if(resultId == ''){
-            empObj.id = new Date().getTime();
             saveData(empObj);
             formReset();
         }
         else{
             remove(resultId);
-            empObj.id = resultId;
             saveData(empObj);
         }
 
