@@ -1,14 +1,15 @@
-//UC9
 window.addEventListener('DOMContentLoaded', (event) => {
     let empId = localStorage.getItem("EditId");
     if(empId){
         localStorage.removeItem("EditId");
-        let empPayrollList = JSON.parse(localStorage.getItem("EmpPayrollList"));
-        let editEmpObj = empPayrollList.find(employee => employee.id == empId);
-        if(!editEmpObj){
-            window.location.href = "PayrollApp.html";
-        }
-        setFormValue(editEmpObj);
+        const getURL = "http://localhost:3000/EmployeePayroll/"+empId;
+        makePromiseCall("GET", getURL, true)
+            .then(responseText => {
+                setFormValue(JSON.parse(responseText));
+        })
+        .catch(error => 
+            console.log("GET Error Status : " + JSON.stringify(error))
+        );
     }
 });
 
@@ -26,19 +27,6 @@ function setFormValue(editEmpObj){
     document.querySelector('#year').value = dateList[0];
     document.querySelector('#notes').value = editEmpObj.notes;
     document.querySelector('#empId').value = editEmpObj.id;
-}
-
-const remove = (id) => {
-    let empPayrollList = JSON.parse(localStorage.getItem("EmpPayrollList"));
-    let removeEmpObj = empPayrollList.find(employee => employee.id == id);
-    if(!removeEmpObj){
-        return;
-    }
-    const index = empPayrollList
-                .map(employee => employee.id)
-                .indexOf(removeEmpObj.id);       
-    empPayrollList.splice(index,1);
-    localStorage.setItem("EmpPayrollList", JSON.stringify(empPayrollList));
 }
 
 class Employee{
@@ -109,16 +97,22 @@ function validateDate(empObj){
 }
 
 function saveData(empObj){
-    let empPayrollList = JSON.parse(localStorage.getItem("EmpPayrollList"));
-    if(empPayrollList != null){
-        empPayrollList.push(empObj);
-    }
-    else{
-        empPayrollList = [empObj];
-    }
-    console.log(empPayrollList);
-    localStorage.setItem("EmpPayrollList", JSON.stringify(empPayrollList));
-    alert("Submitted Successfully !");
+    const postURL = "http://localhost:3000/EmployeePayroll";
+    makePromiseCall("POST", postURL, true, empObj)
+        .then(responseText => {
+            alert("Submitted Successfully !");
+    })
+    .catch(error => console.log("POST Error Status : " + JSON.stringify(error)));
+}
+
+function updateData(empObj,id){
+   
+    const putURL = "http://localhost:3000/EmployeePayroll/"+id;
+    makePromiseCall("PUT", putURL, true, empObj)
+        .then(responseText => {
+            alert("Details Updated Successfully !");
+    })
+    .catch(error => console.log("PUT Error Status : " + JSON.stringify(error)));
 }
 
 function formReset() {
@@ -155,11 +149,9 @@ function onSubmit(){
         const resultId = document.querySelector('#empId').value;
         if(resultId == ''){
             saveData(empObj);
-            formReset();
         }
         else{
-            remove(resultId);
-            saveData(empObj);
+            updateData(empObj,resultId);
         }
 
     }catch(e){

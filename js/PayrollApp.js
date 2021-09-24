@@ -19,18 +19,14 @@ const getDept = (deptList) =>{
     return deptHtml;
 }
 
-const remove = (id) => {
-    let empPayrollList = JSON.parse(localStorage.getItem("EmpPayrollList"));
-    let removeEmpObj = empPayrollList.find(employee => employee.id == id);
-    if(!removeEmpObj){
-        return;
-    }
-    const index = empPayrollList
-                .map(employee => employee.id)
-                .indexOf(removeEmpObj.id);       
-    empPayrollList.splice(index,1);
-    localStorage.setItem("EmpPayrollList", JSON.stringify(empPayrollList));
-    createInnerHtml();
+const remove = (id) =>{
+    const deleteURL = "http://localhost:3000/EmployeePayroll/"+id;
+    makePromiseCall("DELETE", deleteURL, false)
+        .then(responseText => {
+            alert("Employee Removed Successfully !");
+    })
+    .catch(error => console.log("DELETE Error Status : " + JSON.stringify(error)));
+    window.location.href = "PayrollApp.html";
 }
 
 const edit = (id) =>{

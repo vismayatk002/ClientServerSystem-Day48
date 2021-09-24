@@ -1,27 +1,27 @@
 {
-    "EmployeePayroll": [
-      {
-        "id": 1,
-        "empName": "Vismaya",
-        "gender": "Female",
-        "dept": [
-          "Engineering",
-          "Finance"
-        ],
-        "salary": "500000",
-        "startDate": "29 Nov 2019",
-        "profileImg": "../assets/profile-images/Ellipse-1.png"
-      },
-      {
-        "id": 2,
-        "empName": "Deepak",
-        "gender": "male",
-        "dept": [
-          "Engineering"
-        ],
-        "salary": "450000",
-        "startDate": "29 Oct 2019",
-        "profileImg": "../assets/profile-images/Ellipse-2.png"
-      }
-    ]
+  "EmployeePayroll": [
+    {
+      "id": 1,
+      "empName": "Vismaya",
+      "gender": "Female",
+      "dept": [
+        "Engineering",
+        "Finance"
+      ],
+      "salary": "500000",
+      "startDate": "29 Nov 2019",
+      "profileImg": "../assets/profile-images/Ellipse-1.png"
+    },
+    {
+      "id": 2,
+      "empName": "Deepak",
+      "gender": "male",
+      "dept": [
+        "Engineering"
+      ],
+      "salary": "450000",
+      "startDate": "29 Oct 2019",
+      "profileImg": "../assets/profile-images/Ellipse-2.png"
+    }
+  ]
 }
