@@ -1,10 +1,14 @@
 window.addEventListener('DOMContentLoaded', (event) => {
-    createInnerHtml();  
+    getList();  
 });
 
-const empPayrollJSON = () =>{
-    let empPayrollList = JSON.parse(localStorage.getItem("EmpPayrollList"));
-    return empPayrollList;
+const getList = () =>{
+    const getURL = "http://localhost:3000/EmployeePayroll";
+            makePromiseCall("GET", getURL, true)
+                .then(responseText => {
+                    createInnerHtml(JSON.parse(responseText));
+            })
+            .catch(error => console.log("GET Error Status : " + JSON.stringify(error)));
 }
 
 const getDept = (deptList) =>{
@@ -34,7 +38,7 @@ const edit = (id) =>{
     window.location.href = "PayrollForm.html";
 }
 
-const createInnerHtml = () => {
+const createInnerHtml = (empPayrollList) => {
     const headerHtml = `
         <thead class="thead-dark">
             <tr>
@@ -48,7 +52,7 @@ const createInnerHtml = () => {
         </thead>
         <tbody>`;
     let innerHtml = `${headerHtml}`;
-    let empPayrollList = empPayrollJSON();
+
     for(const empPayrollData of empPayrollList){
 
         innerHtml = `${innerHtml}
